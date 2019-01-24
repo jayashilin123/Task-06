@@ -1,0 +1,88 @@
+---
+title: "Carprice prediction Lasso Regression"
+author: ""
+date: "January 24, 2019"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Load the data
+```{r}
+load("rda/carPrice.rda")
+```
+
+library(glmnet)
+```{r include=FALSE}
+library(glmnet)
+```
+Create a matrix "x" of all independent variables and store dependent variable in "y".
+```{r}
+x <- model.matrix(price~.,data=carPrice)[,-1]
+y <-carPrice$price
+```
+
+Divide you data in 70:30 
+```{r}
+set.seed(1)
+train= sample(1:nrow(x), 0.7*nrow(x))
+```
+
+Store indices into test which is not present in train
+```{r}
+test = (-train)
+```
+
+Dependend variable for test data
+```{r}
+y.test = y[test]
+```
+
+Crossvalidation for finding the lambda values 
+```{r}
+cv.out <- cv.glmnet(x[train,],y[train],alpha=1)
+plot(cv.out)
+```
+
+Optimal lamda store it into "minlamda_lasso" object
+```{r}
+minlamda_lasso <-cv.out$lambda.min
+minlamda_lasso
+```
+
+But when we check in the plot, MSE value is constant upto log(6) #6= log(lambda). Working with value equivalent to log lambda =6 will help to eliminate some redundant variable is an advantage.
+
+Lambda equivalent to log lambda = 6
+```{r}
+lambda <- exp(6)
+lambda
+```
+
+Modeling
+```{r}
+lasso.mod <- glmnet(x[train,],y[train],alpha=1,lambda = 403.4)
+```
+
+Prediction
+```{r}
+lasso.pred <- predict(lasso.mod,s= 403.4,newx=x[test,])
+```
+
+MSE
+```{r}
+mean((lasso.pred-y.test)^2)
+```
+
+All the coefficents from the model at optimal lamda, s=403.4
+```{r}
+lasso.coef <- predict(lasso.mod,type="coefficients",s=403.4)
+lasso.coef
+```
+
+Non zero coefficients in final model
+```{r}
+lasso.coef <- predict(lasso.mod,type="coefficients",s=403.4)[1:65,]
+lasso.coef[lasso.coef!=0]
+```

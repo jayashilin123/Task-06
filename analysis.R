@@ -652,8 +652,8 @@ cor(test$price,test$test_price)^2
 
 # Load the dataset "carPrice in the working directory"
 
-
-carPrice<-read.csv("carPrice.csv")
+load("rda/carPrice.rda")
+#carPrice<-read.csv("carPrice.csv")
 
 
 # Create a matrix "x" of all independent variables
@@ -683,6 +683,7 @@ cv.out <- cv.glmnet(x[train,],y[train],alpha=0)
 # Plot cv.out
 
 plot(cv.out)
+ggsave("figs/plot01.png")
 
 # Optimal lamda 
 
@@ -731,6 +732,7 @@ ridge_coef
 
 cv.out <- cv.glmnet(x[train,],y[train],alpha=1)
 plot(cv.out)
+ggsave("figs/plot02.png")
 
 # Optimal lamda store it into "minlamda_lasso" object
 
