@@ -8,12 +8,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 Predict the price of the car model with Linear regression
-
-library(stringr)
-
-library(MASS)
-
-library(car)
 ```{r include=FALSE}
 library(stringr)
 library(MASS)
@@ -134,10 +128,7 @@ Combine the dummy variables and the numeric columns of carprice dataset
 carprice_1 <- cbind(carprice[ , c(1,4:6,9:14,17,19:26)], dummy_1,dummy_2,dummy_3,dummy_4,dummy_5,dummy_6, dummy_7)
 ```
 
-head(carprice_1)
-
 Modeling
-
 ```{r}
 # Divide you data in 70:30 and create test and train datasets
 
@@ -163,7 +154,7 @@ step
 ```
 
 
-```{r}
+```{r include=FALSE}
 model_2 <- lm(formula = price ~ aspiration + enginelocation + carlength + 
                  carwidth + curbweight + enginesize + stroke + peakrpm + citympg + 
                  carCompanybmw + carCompanybuick + carCompanydodge + carCompanyhonda + 
@@ -179,8 +170,10 @@ summary(model_2)
 vif(model_2)
 ```
 
-carlength has a high VIF and is insignificant. Removing carlength
-```{r}
+Variables with high VIF and is insignificant are removed one by one
+
+Removing carlength
+```{r include=FALSE}
 model_3 <- lm(formula = price ~ aspiration + enginelocation + 
                  carwidth + curbweight + enginesize + stroke + peakrpm + citympg + 
                  carCompanybmw + carCompanybuick + carCompanydodge + carCompanyhonda + 
@@ -197,7 +190,7 @@ vif(model_3)
 ```
 
 Remove citympg
-```{r}
+```{r include=FALSE}
 model_4 <- lm(formula = price ~ aspiration + enginelocation + 
                  carwidth + curbweight + enginesize + stroke + peakrpm + 
                  carCompanybmw + carCompanybuick + carCompanydodge + carCompanyhonda + 
@@ -215,7 +208,7 @@ vif(model_4)
 
 
 Remove fuelsystemmpfi
-```{r}
+```{r include=FALSE}
 model_5 <- lm(formula = price ~ aspiration + enginelocation + 
                  carwidth + curbweight + enginesize + stroke + peakrpm + 
                  carCompanybmw + carCompanybuick + carCompanydodge + carCompanyhonda + 
@@ -232,7 +225,7 @@ vif(model_5)
 ```
 
 Remove carcompanyporsche
-```{r}
+```{r include=FALSE}
 model_6 <- lm(formula = price ~ aspiration + enginelocation + 
                  carwidth + curbweight + enginesize + stroke + peakrpm + 
                  carCompanybmw + carCompanybuick + carCompanydodge + carCompanyhonda + 
@@ -249,7 +242,7 @@ vif(model_6)
 ```
 
 Remove fuelsystem2bbl
-```{r}
+```{r include=FALSE}
 model_7 <- lm(formula = price ~ aspiration + enginelocation + 
                  carwidth + curbweight + enginesize + stroke + peakrpm + 
                  carCompanybmw + carCompanybuick + carCompanydodge + carCompanyhonda + 
@@ -266,7 +259,7 @@ vif(model_7)
 ```
 
 Remove symboling0
-```{r}
+```{r include=FALSE}
 model_8 <- lm(formula = price ~ aspiration + enginelocation + 
                  carwidth + curbweight + enginesize + stroke + peakrpm + 
                  carCompanybmw + carCompanybuick + carCompanydodge + carCompanyhonda + 
@@ -282,7 +275,7 @@ vif(model_8)
 ```
 
 Remove symboling.1
-```{r}
+```{r include=FALSE}
 model_9 <- lm(formula = price ~ aspiration + enginelocation + 
                  carwidth + curbweight + enginesize + stroke + peakrpm + 
                  carCompanybmw + carCompanybuick + carCompanydodge + carCompanyhonda + 
@@ -298,7 +291,7 @@ vif(model_9)
 ```
 
 Remove carcompanymercury
-```{r}
+```{r include=FALSE}
 model_10 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + curbweight + enginesize + stroke + peakrpm + 
                   carCompanybmw + carCompanybuick + carCompanydodge + carCompanyhonda + 
@@ -314,7 +307,7 @@ vif(model_10)
 ```
 
 Remove symboling3
-```{r}
+```{r include=FALSE}
 model_11 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + curbweight + enginesize + stroke + peakrpm + 
                   carCompanybmw + carCompanybuick + carCompanydodge + carCompanyhonda + 
@@ -329,7 +322,7 @@ vif(model_11)
 ```
 
 Remove carbodyhardtop
-```{r}
+```{r include=FALSE}
 model_12 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + curbweight + enginesize + stroke + peakrpm + 
                   carCompanybmw + carCompanybuick + carCompanydodge + carCompanyhonda + 
@@ -344,7 +337,7 @@ vif(model_12)
 ```
 
 Remove carbodyhatchback
-```{r}
+```{r include=FALSE}
 model_13 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + curbweight + enginesize + stroke + peakrpm + 
                   carCompanybmw + carCompanybuick + carCompanydodge + carCompanyhonda + 
@@ -359,7 +352,7 @@ vif(model_13)
 ```
 
 Remove carbodysedan
-```{r}
+```{r include=FALSE}
 model_14 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + curbweight + enginesize + stroke + peakrpm + 
                   carCompanybmw + carCompanybuick + carCompanydodge + carCompanyhonda + 
@@ -374,7 +367,7 @@ vif(model_14)
 ```
 
 Remove carbodywagon
-```{r}
+```{r include=FALSE}
 model_15 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + curbweight + enginesize + stroke + peakrpm + 
                   carCompanybmw + carCompanybuick + carCompanydodge + carCompanyhonda + 
@@ -387,11 +380,10 @@ summary(model_15)
 vif(model_15)
 ```
 
-All variables are significant now
+All variables are significant now. Variable curbweight and enginesize have high VIFs. curbweight is very less significant as compared to enginesize
 
-Variable curbweight and enginesize have high VIFs. curbweight is very less significant as compared to enginesize. Remove curbweight.
-
-```{r}
+Remove curbweight
+```{r include=FALSE}
 model_16 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + enginesize + stroke + peakrpm + 
                   carCompanybmw + carCompanybuick + carCompanydodge + carCompanyhonda + 
@@ -405,8 +397,7 @@ vif(model_16)
 ```
 
 Remove cylindernumberfive
-
-```{r}
+```{r include=FALSE}
 model_17 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + enginesize + stroke + peakrpm + 
                   carCompanybmw + carCompanybuick + carCompanydodge + carCompanyhonda + 
@@ -420,7 +411,7 @@ vif(model_17)
 ```
 
 Remove peakrpm (higher VIF, higher p-value as compared to othe variables in model)
-```{r}
+```{r include=FALSE}
 model_18 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + enginesize + stroke +  
                   carCompanybmw + carCompanybuick + carCompanydodge + carCompanyhonda + 
@@ -434,7 +425,7 @@ vif(model_18)
 ```
 
 Remove carCompanysaab
-```{r}
+```{r include=FALSE}
 model_19 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + enginesize + stroke +  
                   carCompanybmw + carCompanybuick + carCompanydodge + carCompanyhonda + 
@@ -448,7 +439,7 @@ vif(model_19)
 ```
 
 Remove carcompanyhonda
-```{r}
+```{r include=FALSE}
 model_20 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + enginesize + stroke +  
                   carCompanybmw + carCompanybuick + carCompanydodge + 
@@ -462,7 +453,7 @@ vif(model_20)
 ```
 
 Remove carCompany renault
-```{r}
+```{r include=FALSE}
 model_21 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + enginesize + stroke +  
                   carCompanybmw + carCompanybuick + carCompanydodge + 
@@ -476,7 +467,7 @@ vif(model_21)
 ```
 
 Remove drivewheelrwd
-```{r}
+```{r include=FALSE}
 model_22 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + enginesize + stroke +  
                   carCompanybmw + carCompanybuick + carCompanydodge + 
@@ -490,7 +481,7 @@ vif(model_22)
 ```
 
 Remove carCompanyvolkswagen
-```{r}
+```{r include=FALSE}
 model_23 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + enginesize + stroke +  
                   carCompanybmw + carCompanybuick + carCompanydodge + 
@@ -504,7 +495,7 @@ vif(model_23)
 ```
 
 Remove carCompanydodge
-```{r}
+```{r include=FALSE}
 model_24 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + enginesize + stroke +  
                   carCompanybmw + carCompanybuick + 
@@ -518,7 +509,7 @@ vif(model_24)
 ```
 
 Remove carCompanyplymouth
-```{r}
+```{r include=FALSE}
 model_25 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + enginesize + stroke +  
                   carCompanybmw + carCompanybuick + 
@@ -531,7 +522,7 @@ vif(model_25)
 ```
 
 Remove carCompanynissan
-```{r}
+```{r include=FALSE}
 model_26 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + enginesize + stroke +  
                   carCompanybmw + carCompanybuick + 
@@ -544,7 +535,7 @@ vif(model_26)
 ```
 
 Remove enginetypeohc
-```{r}
+```{r include=FALSE}
 model_27 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + enginesize + stroke +  
                   carCompanybmw + carCompanybuick + 
@@ -557,7 +548,7 @@ vif(model_27)
 ```
 
 Remove carCompanymitsubishi
-```{r}
+```{r include=FALSE}
 model_28 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + enginesize + stroke +  
                   carCompanybmw + carCompanybuick + 
@@ -569,7 +560,7 @@ vif(model_28)
 ```
 
 Remove carCompanytoyota
-```{r}
+```{r include=FALSE}
 model_29 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + enginesize + stroke +  
                   carCompanybmw + carCompanybuick + 
@@ -581,7 +572,7 @@ vif(model_29)
 ```
 
 Remove carcompanyPeugeot
-```{r}
+```{r include=FALSE}
 model_30 <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + enginesize + stroke +  
                   carCompanybmw + carCompanybuick + 
@@ -592,10 +583,10 @@ summary(model_30)
 vif(model_30)
 ```
 
-adjusted R-squared = 0.9437. carwidth, enginesize have high VIF. Lets see what happens when these are removed.
+Adjusted R-squared = 0.9437. carwidth, enginesize have high VIF. Lets see what happens when these are removed.
 
 Removing carwidth
-```{r}
+```{r include=FALSE}
 model_31a <- lm(formula = price ~ aspiration + enginelocation + 
                   enginesize + stroke +  
                   carCompanybmw + carCompanybuick + 
@@ -609,7 +600,7 @@ vif(model_31a)
 Adjusted R-squared decreased from 0.9437 to 0.9224, a decline of 2 percent.
 
 Removing enginesize
-```{r}
+```{r include=FALSE}
 model_31b <- lm(formula = price ~ aspiration + enginelocation + 
                   carwidth + stroke +  
                   carCompanybmw + carCompanybuick + 
@@ -625,7 +616,7 @@ Adjusted R-squared decreases from 0.9437 to 0.8926. These are fairly large decre
 Remove variables which are comparatively less significant
 
 Remove aspiration
-```{r}
+```{r include=FALSE}
 model_31 <- lm(formula = price ~  enginelocation + 
                   carwidth + enginesize + stroke +  
                   carCompanybmw + carCompanybuick + 
@@ -637,7 +628,7 @@ vif(model_31)
 ```
 
 Remove carcompanysubaru
-```{r}
+```{r include=FALSE}
 model_32 <- lm(formula = price ~  enginelocation + 
                   carwidth + enginesize + stroke +  
                   carCompanybmw + carCompanybuick + 
@@ -648,8 +639,7 @@ vif(model_32)
 ```
 
 Remove enginetyperotor
-
-```{r}
+```{r include=FALSE}
 model_33 <- lm(formula = price ~  enginelocation + 
                   carwidth + enginesize + stroke +  
                   carCompanybmw + carCompanybuick + 
@@ -659,7 +649,7 @@ vif(model_33)
 ```
 
 Remove stroke
-```{r}
+```{r include=FALSE}
 model_34 <- lm(formula = price ~  enginelocation + 
                   carwidth + enginesize +  
                   carCompanybmw + carCompanybuick + 
@@ -669,7 +659,7 @@ vif(model_34)
 ```
 
 Remove carcompany jaguar
-```{r}
+```{r echo=TRUE}
 model_35 <- lm(formula = price ~  enginelocation + 
                   carwidth + enginesize + 
                   carCompanybmw + carCompanybuick, data = train[, -1])
